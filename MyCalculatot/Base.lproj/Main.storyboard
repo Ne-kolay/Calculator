@@ -30,6 +30,9 @@
                                                 <buttonConfiguration key="configuration" style="plain" title="CLEAR">
                                                     <fontDescription key="titleFontDescription" type="system" weight="light" pointSize="20"/>
                                                 </buttonConfiguration>
+                                                <connections>
+                                                    <action selector="clearTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="XDM-xt-qJn"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" tag="16" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xjm-G8-KM3">
                                                 <rect key="frame" x="103.66666666666669" y="0.0" width="89.333333333333314" height="92"/>
@@ -39,6 +42,9 @@
                                                 <buttonConfiguration key="configuration" style="plain" title="+/-">
                                                     <fontDescription key="titleFontDescription" type="system" weight="light" pointSize="30"/>
                                                 </buttonConfiguration>
+                                                <connections>
+                                                    <action selector="changeNumberSignTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="l49-Bh-G4a"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" tag="17" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z8b-aI-Ewk">
                                                 <rect key="frame" x="207" y="0.0" width="89.666666666666686" height="92"/>
@@ -48,6 +54,9 @@
                                                 <buttonConfiguration key="configuration" style="plain" title="%">
                                                     <fontDescription key="titleFontDescription" type="system" weight="light" pointSize="30"/>
                                                 </buttonConfiguration>
+                                                <connections>
+                                                    <action selector="percentTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="o9R-8t-RLD"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" tag="13" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Nm-QR-oem">
                                                 <rect key="frame" x="310.66666666666669" y="0.0" width="89.333333333333314" height="92"/>
@@ -58,7 +67,7 @@
                                                     <fontDescription key="titleFontDescription" type="system" weight="light" pointSize="30"/>
                                                 </buttonConfiguration>
                                                 <connections>
-                                                    <action selector="divideTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="zb0-Bt-Yg5"/>
+                                                    <action selector="mathSignTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vfY-ra-hQe"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -111,7 +120,7 @@
                                                     <fontDescription key="titleFontDescription" type="system" weight="light" pointSize="30"/>
                                                 </buttonConfiguration>
                                                 <connections>
-                                                    <action selector="multiplyTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="VZB-NS-T2H"/>
+                                                    <action selector="mathSignTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="PWn-hw-dxJ"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -164,7 +173,7 @@
                                                     <fontDescription key="titleFontDescription" type="system" weight="light" pointSize="30"/>
                                                 </buttonConfiguration>
                                                 <connections>
-                                                    <action selector="minusTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="qnn-vh-PvZ"/>
+                                                    <action selector="mathSignTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="voG-fC-KGK"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -218,7 +227,6 @@
                                                 </buttonConfiguration>
                                                 <connections>
                                                     <action selector="mathSignTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ntr-5v-zcY"/>
-                                                    <action selector="plusTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="MLa-e0-1Qd"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -246,6 +254,9 @@
                                                 <buttonConfiguration key="configuration" style="plain" title=",">
                                                     <fontDescription key="titleFontDescription" type="system" weight="light" pointSize="30"/>
                                                 </buttonConfiguration>
+                                                <connections>
+                                                    <action selector="commaTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="gUX-rl-7Tm"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" tag="14" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KZh-B8-u8Z">
                                                 <rect key="frame" x="310.66666666666669" y="0.0" width="89.333333333333314" height="92"/>
@@ -287,8 +298,7 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="equalSign" destination="KZh-B8-u8Z" id="eIm-lv-tpk"/>
-                        <outlet property="screen" destination="G6N-uG-ipB" id="7NI-7j-xPk"/>
+                        <outlet property="screen" destination="G6N-uG-ipB" id="Di1-5O-2TY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
