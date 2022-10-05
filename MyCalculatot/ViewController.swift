@@ -10,9 +10,15 @@ import UIKit
 class ViewController: UIViewController {
     
     override func viewDidLoad() {
-    super.viewDidLoad()
-    screen.text = "0"
-}
+        super.viewDidLoad()
+        screen.text = "0"
+        for button in allButtons {
+            if button.tag <= 9 {
+                continue
+            }
+            button.isEnabled = false
+        }
+    }
     
     var firstNumber: Double = 0
     var secondNumber: Double = 0
@@ -22,14 +28,12 @@ class ViewController: UIViewController {
     var firstDigitIsEntered = true //вводится ли сейчас первая цифра в числе
     var signIsselected: Bool = false //выбран ли знак
     var numberIsPositive: Bool = true //положительное ли число на экране
- 
+    
     @IBOutlet var screen: UILabel! //
-    
-    
     @IBOutlet var allButtons: [UIButton]!
+    @IBOutlet var mathSignButtons: [UIButton]!
     
-    
-    //вычисление результата сложения, вычитания, умножения или деления
+    //вычисление результата сложения, вычитания, умножения или деления , убрать result
     func calculation (firstElement: Double, secondElement: Double, sign: String) -> Double {
         var result: Double
         switch sign {
@@ -46,22 +50,29 @@ class ViewController: UIViewController {
         }
         return result
     }
-
-        
     
-//ввод цифр
+    
+    
+    //ввод цифр
     @IBAction func digitTapped(_ sender: UIButton) {
         //не позволяет ввести ещё один ноль в целой части, если на экране уже имеется ноль
-        if (sender.tag == 0 && screen.text == "0") || (signIsselected == true && sender.tag == 0 && screen.text == "0") {
+        if sender.tag == 0 && screen.text == "0" {
             return
         }
-        if firstDigitIsEntered {                          //если это первая цифра в числе, заменяет содержимое экрана на эту цифру
+        
+        if firstDigitIsEntered {
             screen.text = String(sender.tag)
+            if signIsselected == false {
+                for mathSignButtons in mathSignButtons {
+                    mathSignButtons.isEnabled == true
+                }
+            }
             firstDigitIsEntered = false
-        } else {                                           //иначе, добавляет к числу на экране цифру справа
+        } else {
             screen.text = screen.text! + String(sender.tag)
         }
     }
+    
     
     @IBAction func commaTapped(_ sender: UIButton) {  //вводит точку. надо заменить точку на запятую при выводе дробного числа на экран
         guard !firstDigitIsEntered else {return} //не позволяет ввести запятую первой в числе
@@ -136,6 +147,9 @@ class ViewController: UIViewController {
         signIsselected = true
         firstDigitIsEntered = true
         numberIsPositive = true
+        for mathSignButton in mathSignButtons {
+            mathSignButton.isEnabled = false
+        }
     }
     
     

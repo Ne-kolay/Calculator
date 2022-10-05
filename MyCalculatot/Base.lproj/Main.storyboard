@@ -318,6 +318,10 @@
                         <outletCollection property="allButtons" destination="xjm-G8-KM3" collectionClass="NSMutableArray" id="qbN-ls-WgD"/>
                         <outletCollection property="allButtons" destination="z8b-aI-Ewk" collectionClass="NSMutableArray" id="6Vc-vs-4ft"/>
                         <outletCollection property="allButtons" destination="7Nm-QR-oem" collectionClass="NSMutableArray" id="yKI-3V-8Fc"/>
+                        <outletCollection property="mathSignButtons" destination="7Nm-QR-oem" collectionClass="NSMutableArray" id="foE-Yt-HAl"/>
+                        <outletCollection property="mathSignButtons" destination="z87-hM-qud" collectionClass="NSMutableArray" id="fyP-Us-lNq"/>
+                        <outletCollection property="mathSignButtons" destination="5rU-e6-pyJ" collectionClass="NSMutableArray" id="Sm3-0q-ims"/>
+                        <outletCollection property="mathSignButtons" destination="fcp-SI-yNC" collectionClass="NSMutableArray" id="tON-AM-nbG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
