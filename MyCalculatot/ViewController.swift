@@ -19,13 +19,14 @@ class ViewController: UIViewController {
     var sign: String = ""
     var result = Double()
     
-    var firstNumberIsEntered = true //вводится ли сейчас первая цифра в числе
+    var firstDigitIsEntered = true //вводится ли сейчас первая цифра в числе
     var signIsselected: Bool = false //выбран ли знак
     var numberIsPositive: Bool = true //положительное ли число на экране
  
     @IBOutlet var screen: UILabel! //
     
     
+    @IBOutlet var allButtons: [UIButton]!
     
     
     //вычисление результата сложения, вычитания, умножения или деления
@@ -54,16 +55,16 @@ class ViewController: UIViewController {
         if (sender.tag == 0 && screen.text == "0") || (signIsselected == true && sender.tag == 0 && screen.text == "0") {
             return
         }
-        if firstNumberIsEntered {                          //если это первая цифра в числе, заменяет содержимое экрана на эту цифру
+        if firstDigitIsEntered {                          //если это первая цифра в числе, заменяет содержимое экрана на эту цифру
             screen.text = String(sender.tag)
-            firstNumberIsEntered = false
+            firstDigitIsEntered = false
         } else {                                           //иначе, добавляет к числу на экране цифру справа
             screen.text = screen.text! + String(sender.tag)
         }
     }
     
     @IBAction func commaTapped(_ sender: UIButton) {  //вводит точку. надо заменить точку на запятую при выводе дробного числа на экран
-        guard !firstNumberIsEntered else {return} //не позволяет ввести запятую первой в числе
+        guard !firstDigitIsEntered else {return} //не позволяет ввести запятую первой в числе
         screen.text = screen.text! + "."
     }
     
@@ -72,14 +73,17 @@ class ViewController: UIViewController {
         secondNumber = 0
         sign = ""
         result = 0
-        firstNumberIsEntered = true
+        firstDigitIsEntered = true
         signIsselected = false
         numberIsPositive = true
         screen.text = "0"
+        for button in allButtons {
+            button.isEnabled = true
+        }
     }
     
     @IBAction func changeNumberSignTapped(_ sender: UIButton) { //смена знака числа
-        guard firstNumberIsEntered == false && screen.text != "0" else {return} // не позволяет поменять знак ещё не введённому числу и нулю или знаку
+        guard firstDigitIsEntered == false && screen.text != "0" else {return} // не позволяет поменять знак ещё не введённому числу и нулю или знаку
         guard screen.text != "+" && screen.text != "-" && screen.text != "*" && screen.text != "/" else {return}
         if numberIsPositive { // если число положительное, спереди добавится знак "-"
             screen.text = "-" + screen.text!
@@ -110,7 +114,7 @@ class ViewController: UIViewController {
     
     @IBAction func mathSignTapped(_ sender: UIButton) { //ввод знака
         guard signIsselected == false else {return} //не позволяет ввести знак более одного раза
-        guard screen.text?.isEmpty == false else {return} // не позволяет ввести знак в отсутствие первого числа
+        guard screen.text != "0" else {return} // не позволяет ввести знак в отсутствие первого числа
         
         firstNumber = Double(screen.text!)!
         switch sender.tag {
@@ -130,7 +134,7 @@ class ViewController: UIViewController {
             return
         }
         signIsselected = true
-        firstNumberIsEntered = true
+        firstDigitIsEntered = true
         numberIsPositive = true
     }
     
@@ -138,13 +142,18 @@ class ViewController: UIViewController {
     @IBAction func equalsTapped(_ sender: UIButton) { // производит вычисления
         guard signIsselected == true && screen.text != sign else {return}
         secondNumber = Double(screen.text!)!
-        result = calculation(firstElement: firstNumber, secondElement: secondNumber, sign: sign)
-        if result.truncatingRemainder(dividingBy: 1) == 0 { //если дробная часть == 0, она не выводится на экран
-            screen.text = String(Int(result))
+        if calculation(firstElement: firstNumber, secondElement: secondNumber, sign: sign).truncatingRemainder(dividingBy: 1) == 0 {
+            screen.text = String(Int(calculation(firstElement: firstNumber, secondElement: secondNumber, sign: sign)))
         } else {
-            screen.text = String(result) // если нет, выводим с дробной частью
+            screen.text = String(calculation(firstElement: firstNumber, secondElement: secondNumber, sign: sign))
         }
         numberIsPositive = true
+        for button in allButtons {
+            if button.tag == 15 {
+                continue
+            }
+            button.isEnabled = false
+        }
     }
 }
 
