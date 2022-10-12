@@ -11,7 +11,7 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        screen.text = "0"
+        screen.text = ""
         for button in allButtons {
             if button.tag <= 9 {
                 continue
@@ -23,17 +23,23 @@ class ViewController: UIViewController {
     var firstNumber: Double = 0
     var secondNumber: Double = 0
     var sign: String = ""
-    var result = Double()
     
-    var firstDigitIsEntered = true //вводится ли сейчас первая цифра в числе
-    var signIsselected: Bool = false //выбран ли знак
-    var numberIsPositive: Bool = true //положительное ли число на экране
+    var firstDigitEntering = true //вводится ли сейчас первая цифра в числе
+    var signIsSelected: Bool = false //выбран ли знак
+    
     
     @IBOutlet var screen: UILabel! //
     @IBOutlet var allButtons: [UIButton]!
     @IBOutlet var mathSignButtons: [UIButton]!
+    @IBOutlet var equalButton: UIButton!
+    @IBOutlet var clearButton: UIButton!
+    @IBOutlet var signChangeButton: UIButton!
+    @IBOutlet var commaButton: UIButton!
+    @IBOutlet var percentButton: UIButton!
     
-    //вычисление результата сложения, вычитания, умножения или деления , убрать result
+    
+    
+    
     func calculation (firstElement: Double, secondElement: Double, sign: String) -> Double {
         var result: Double
         switch sign {
@@ -53,62 +59,79 @@ class ViewController: UIViewController {
     
     
     
-    //ввод цифр
     @IBAction func digitTapped(_ sender: UIButton) {
-        //не позволяет ввести ещё один ноль в целой части, если на экране уже имеется ноль
-        if sender.tag == 0 && screen.text == "0" {
-            return
+        guard screen.text!.count < 10 else {return}
+        
+        if firstDigitEntering {
+            screen.text = String(sender.tag)
+            clearButton.isEnabled = true
+            commaButton.isEnabled = true
+            firstDigitEntering = false
+            
+            if !signIsSelected {
+                for button in mathSignButtons {
+                    button.isEnabled = true
+                }
+            } else {
+                equalButton.isEnabled = true
+                percentButton.isEnabled = true
+            }
+        } else {
+            if screen.text == "0" {
+                if sender.tag == 0 {
+                    return
+                } else {
+                    screen.text = String(sender.tag)
+                }
+            } else {
+                screen.text = screen.text! + String(sender.tag)
+            }
+            
         }
         
-        if firstDigitIsEntered {
-            screen.text = String(sender.tag)
-            if signIsselected == false {
-                for mathSignButtons in mathSignButtons {
-                    mathSignButtons.isEnabled == true
-                }
-            }
-            firstDigitIsEntered = false
-        } else {
-            screen.text = screen.text! + String(sender.tag)
+        if screen.text != "0" && screen.text != "0." && Double(screen.text!)! != 0.0 {
+            signChangeButton.isEnabled = true
         }
     }
     
     
-    @IBAction func commaTapped(_ sender: UIButton) {  //вводит точку. надо заменить точку на запятую при выводе дробного числа на экран
-        guard !firstDigitIsEntered else {return} //не позволяет ввести запятую первой в числе
+    @IBAction func commaTapped(_ sender: UIButton) {
         screen.text = screen.text! + "."
+        commaButton.isEnabled = false
+        firstDigitEntering = false
     }
     
     @IBAction func clearTapped(_ sender: UIButton) { //сброс
         firstNumber = 0
         secondNumber = 0
         sign = ""
-        result = 0
-        firstDigitIsEntered = true
-        signIsselected = false
-        numberIsPositive = true
-        screen.text = "0"
+        firstDigitEntering = true
+        signIsSelected = false
+        screen.text = ""
         for button in allButtons {
-            button.isEnabled = true
+            if button.tag <= 9 {
+                button.isEnabled = true
+            } else {
+                button.isEnabled = false
+            }
         }
     }
     
-    @IBAction func changeNumberSignTapped(_ sender: UIButton) { //смена знака числа
-        guard firstDigitIsEntered == false && screen.text != "0" else {return} // не позволяет поменять знак ещё не введённому числу и нулю или знаку
-        guard screen.text != "+" && screen.text != "-" && screen.text != "*" && screen.text != "/" else {return}
-        if numberIsPositive { // если число положительное, спереди добавится знак "-"
+    @IBAction func changeNumberSignTapped(_ sender: UIButton) {
+        //другой вариант блокировки кнопки смены знака
+        //guard Double(screen.text!)! != 0.0 else {screen.text = "0"; signChangeButton.isEnabled = false; return} — так ведёт себя оригинальный калькулятор
+        //guard Double(screen.text!)! != 0.0 else {return}
+
+        if screen.text![screen.text!.startIndex] != "-"{
             screen.text = "-" + screen.text!
-            numberIsPositive = false
         } else {
-            screen.text!.remove(at: screen.text!.startIndex) //если число отрицательное, нажатие на кнопку удалит первый символ(знак "-")
-            numberIsPositive = true
+            screen.text!.remove(at: screen.text!.startIndex)
         }
     }
     
-    //при расчёте процентов, некоторые дробные числа дают большое количество нулей после запятой. мб надо дописать округление до какого-то кол-ва знаков
-    @IBAction func percentTapped(_ sender: UIButton) { //расчёт процентов
-        // не позволяет расчитывать проценты, пока не выбран знак и не введено второе число
-        guard signIsselected == true && screen.text != sign else {return}
+    @IBAction func percentTapped(_ sender: UIButton) {
+        guard signIsSelected == true && screen.text != sign else {return}
+        
         switch sign {
         case "+", "-":
             if ((firstNumber / 100) * Double(screen.text!)!).truncatingRemainder(dividingBy: 1) == 0 {
@@ -124,10 +147,17 @@ class ViewController: UIViewController {
     }
     
     @IBAction func mathSignTapped(_ sender: UIButton) { //ввод знака
-        guard signIsselected == false else {return} //не позволяет ввести знак более одного раза
-        guard screen.text != "0" else {return} // не позволяет ввести знак в отсутствие первого числа
+        guard signIsSelected == false else {return}
         
         firstNumber = Double(screen.text!)!
+        signIsSelected = true
+        firstDigitEntering = true
+        signChangeButton.isEnabled = false
+        
+        for mathSignButton in mathSignButtons {
+            mathSignButton.isEnabled = false
+        }
+        
         switch sender.tag {
         case 10:
             sign = "+"
@@ -144,32 +174,30 @@ class ViewController: UIViewController {
         default:
             return
         }
-        signIsselected = true
-        firstDigitIsEntered = true
-        numberIsPositive = true
-        for mathSignButton in mathSignButtons {
-            mathSignButton.isEnabled = false
-        }
+        
     }
     
     
-    @IBAction func equalsTapped(_ sender: UIButton) { // производит вычисления
-        guard signIsselected == true && screen.text != sign else {return}
+    @IBAction func equalsTapped(_ sender: UIButton) {
+        //2.3 + 5.6 = 7.89999999999999999 wtf
         secondNumber = Double(screen.text!)!
+        
         if calculation(firstElement: firstNumber, secondElement: secondNumber, sign: sign).truncatingRemainder(dividingBy: 1) == 0 {
-            screen.text = String(Int(calculation(firstElement: firstNumber, secondElement: secondNumber, sign: sign)))
+            var result = String(calculation(firstElement: firstNumber, secondElement: secondNumber, sign: sign))
+            result.removeSubrange(result.index(result.startIndex, offsetBy: result.count - 2)...result.index(result.startIndex, offsetBy: result.count - 1))
+            screen.text = result
         } else {
             screen.text = String(calculation(firstElement: firstNumber, secondElement: secondNumber, sign: sign))
         }
-        numberIsPositive = true
+        clearButton.isEnabled = true
         for button in allButtons {
             if button.tag == 15 {
-                continue
+                button.isEnabled = true
+            } else {
+                button.isEnabled = false
             }
-            button.isEnabled = false
         }
     }
 }
-
 
 

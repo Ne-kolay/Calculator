@@ -280,10 +280,10 @@
                                     <constraint firstItem="KZh-B8-u8Z" firstAttribute="width" secondItem="fcp-SI-yNC" secondAttribute="width" id="zkZ-BZ-KFz"/>
                                 </constraints>
                             </stackView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G6N-uG-ipB">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" minimumFontSize="29" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="G6N-uG-ipB">
                                 <rect key="frame" x="20" y="218" width="388" height="136"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="70"/>
+                                <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="57"/>
                                 <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -298,7 +298,12 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="clearButton" destination="tQS-cP-Dmw" id="FXt-O9-nWT"/>
+                        <outlet property="commaButton" destination="Cec-kJ-unF" id="Uka-V9-4I7"/>
+                        <outlet property="equalButton" destination="KZh-B8-u8Z" id="XIx-Vi-aYL"/>
+                        <outlet property="percentButton" destination="z8b-aI-Ewk" id="3hw-x5-Vk8"/>
                         <outlet property="screen" destination="G6N-uG-ipB" id="Di1-5O-2TY"/>
+                        <outlet property="signChangeButton" destination="xjm-G8-KM3" id="7Wz-n3-ejm"/>
                         <outletCollection property="allButtons" destination="3QX-wh-Ibn" collectionClass="NSMutableArray" id="CjF-An-YIQ"/>
                         <outletCollection property="allButtons" destination="Cec-kJ-unF" collectionClass="NSMutableArray" id="U2s-d1-oKS"/>
                         <outletCollection property="allButtons" destination="KZh-B8-u8Z" collectionClass="NSMutableArray" id="UQG-2F-G9g"/>
@@ -331,7 +336,7 @@
                     <viewLayoutGuide key="safeArea" id="IkE-Pb-zDy"/>
                 </stackView>
             </objects>
-            <point key="canvasLocation" x="-1949" y="-1251"/>
+            <point key="canvasLocation" x="-2361" y="-1236"/>
         </scene>
     </scenes>
     <resources>
