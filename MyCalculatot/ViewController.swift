@@ -101,7 +101,7 @@ class ViewController: UIViewController {
         firstDigitEntering = false
     }
     
-    @IBAction func clearTapped(_ sender: UIButton) { //сброс
+    @IBAction func clearTapped(_ sender: UIButton) {
         firstNumber = 0
         secondNumber = 0
         sign = ""
@@ -136,6 +136,9 @@ class ViewController: UIViewController {
         case "+", "-":
             if ((firstNumber / 100) * Double(screen.text!)!).truncatingRemainder(dividingBy: 1) == 0 {
                 screen.text = String(Int(((firstNumber / 100) * Double(screen.text!)!)))
+                
+                
+                //screen.text = String(Int(((firstNumber / 100) * Double(screen.text!)!)))
             } else {
                 screen.text = String((firstNumber / 100) * Double(screen.text!)!)
             }
@@ -146,7 +149,7 @@ class ViewController: UIViewController {
         }
     }
     
-    @IBAction func mathSignTapped(_ sender: UIButton) { //ввод знака
+    @IBAction func mathSignTapped(_ sender: UIButton) {
         guard signIsSelected == false else {return}
         
         firstNumber = Double(screen.text!)!
@@ -179,7 +182,6 @@ class ViewController: UIViewController {
     
     
     @IBAction func equalsTapped(_ sender: UIButton) {
-        //2.3 + 5.6 = 7.89999999999999999 wtf
         secondNumber = Double(screen.text!)!
         
         if calculation(firstElement: firstNumber, secondElement: secondNumber, sign: sign).truncatingRemainder(dividingBy: 1) == 0 {
@@ -187,7 +189,7 @@ class ViewController: UIViewController {
             result.removeSubrange(result.index(result.startIndex, offsetBy: result.count - 2)...result.index(result.startIndex, offsetBy: result.count - 1))
             screen.text = result
         } else {
-            screen.text = String(calculation(firstElement: firstNumber, secondElement: secondNumber, sign: sign))
+            screen.text = String((calculation(firstElement: firstNumber, secondElement: secondNumber, sign: sign) * 1000000000).rounded() / 1000000000)
         }
         clearButton.isEnabled = true
         for button in allButtons {
